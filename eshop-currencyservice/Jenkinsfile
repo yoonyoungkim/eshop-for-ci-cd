@@ -1,6 +1,7 @@
 pipeline {
   environment {
     PROJECT_ID = 'architect-certification-289902'
+    MEMBER_ID = ''
   }
   agent {
     kubernetes {
@@ -30,7 +31,7 @@ spec:
       steps {
         container('dind') {
           dir('eshop-currencyservice') {
-            sh 'docker image build -t gcr.io/$PROJECT_ID/eshop-currencyservice:$BUILD_ID .'
+            sh 'docker image build -t gcr.io/$PROJECT_ID/$MEMBER_ID/eshop-currencyservice:$BUILD_ID .'
           }
         }
       }
@@ -42,7 +43,7 @@ spec:
           dir('eshop-currencyservice') {
             withCredentials([file(credentialsId: 'gcr-credential', variable: 'GCR_CREDENTIAL_JSON')]) {
               sh 'docker login gcr.io -u _json_key -p "$( cat $GCR_CREDENTIAL_JSON )"'
-              sh 'docker image push gcr.io/$PROJECT_ID/eshop-currencyservice:$BUILD_ID'
+              sh 'docker image push gcr.io/$PROJECT_ID/$MEMBER_ID/eshop-currencyservice:$BUILD_ID'
             }
           }
         }
