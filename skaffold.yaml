@@ -19,9 +19,6 @@ build:
       jib: {}
     - image: eshop-frontend
       context: eshop-frontend
-      docker:
-        buildArgs:
-          VUE_APP_BASE_URL: http://localhost/api
 deploy:
   kubectl:
     manifests:
