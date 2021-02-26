@@ -15,12 +15,12 @@ export default {
     actions: {
       async fetchAd(context) {
         console.log("fetchAd")
-        const ads = (await axios.get(process.env.VUE_APP_BASE_URL + "/ads")).data
+        const ads = (await axios.get(process.env.VUE_APP_BASE_URL + "/api/ads")).data
         context.commit("setAd", _.sample(ads))
       },
       async fetchAdsByCategories(context, categories) {
         console.log("fetchAdsByCategories : " + categories.join())
-        const ads = (await axios.get(process.env.VUE_APP_BASE_URL + "/ads" + "/" + categories.join())).data
+        const ads = (await axios.get(process.env.VUE_APP_BASE_URL + "/api/ads" + "/" + categories.join())).data
         context.commit("setAd", _.sample(ads))
       }
     },

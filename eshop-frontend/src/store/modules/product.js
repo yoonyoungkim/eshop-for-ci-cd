@@ -18,12 +18,12 @@ export default {
     actions: {
       async fetchProducts(context) {
         console.log("fetchProducts")
-        const res = await axios.get(process.env.VUE_APP_BASE_URL + "/products")
+        const res = await axios.get(process.env.VUE_APP_BASE_URL + "/api/products")
         context.commit("setProducts", res.data.products)
       },
       async fetchProduct(context, id) {
         console.log("fetchProduct : " + id)
-        const res = await axios.get(process.env.VUE_APP_BASE_URL + "/products/" + id)
+        const res = await axios.get(process.env.VUE_APP_BASE_URL + "/api/products/" + id)
         context.commit("setCurrentProduct", res.data)
       }
     },

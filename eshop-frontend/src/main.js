@@ -22,7 +22,7 @@ Vue.prototype.$renderMoney = function(money, userCurrency) {
     return money.currencyCode + " " + money.units
   } 
 
-  axios.post(process.env.VUE_APP_BASE_URL + "currencies/convert", { from: money, to_code: userCurrency })
+  axios.post(process.env.VUE_APP_BASE_URL + "/api/currencies/convert", { from: money, to_code: userCurrency })
   .then((res) => {
     var converted = res.data;
     if(converted.nanos) {

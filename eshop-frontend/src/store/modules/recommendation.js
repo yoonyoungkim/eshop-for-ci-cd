@@ -10,7 +10,7 @@ export default {
     },
     actions: {
       async fetchRecommendations(context) {
-        const res = await axios.get(process.env.VUE_APP_BASE_URL + "/recommends")
+        const res = await axios.get(process.env.VUE_APP_BASE_URL + "/api/recommends")
         context.commit("setRecommendations", res.data.recommendations)
       }
     },

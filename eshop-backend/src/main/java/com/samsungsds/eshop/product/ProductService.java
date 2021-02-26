@@ -19,18 +19,21 @@ public class ProductService {
   }
   
   public Products fetchProducts() {
-    ResponseEntity<Products> productsResponse = restTemplate.getForEntity(productServiceUrl, Products.class);
+    String fetchProductsUrl = productServiceUrl + "/api/products";
+    ResponseEntity<Products> productsResponse = restTemplate.getForEntity(fetchProductsUrl, Products.class);
     return productsResponse.getBody();
   }
 
   public Product fetchProductById(final String id) {
-    ResponseEntity<Product> productResponse = restTemplate.getForEntity(productServiceUrl + "/" + id, Product.class);
+    String fetchProductsByIdUrl = productServiceUrl + "/api/products/" + id;
+    ResponseEntity<Product> productResponse = restTemplate.getForEntity(fetchProductsByIdUrl, Product.class);
     return productResponse.getBody();
   }
 
   public Products fetchProductsByIds(final String[] ids) {
     String idsString = Stream.of(ids).collect(Collectors.joining(","));
-    ResponseEntity<Products> productsResponse = restTemplate.getForEntity(productServiceUrl + "?ids=" + idsString, Products.class);
+    String fetchProductsByIdsUrl = productServiceUrl + "/api/products" + "?ids=" + idsString;
+    ResponseEntity<Products> productsResponse = restTemplate.getForEntity(fetchProductsByIdsUrl, Products.class);
     return productsResponse.getBody();
   }
 }

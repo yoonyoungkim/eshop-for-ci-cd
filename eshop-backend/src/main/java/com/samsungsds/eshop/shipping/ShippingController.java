@@ -9,9 +9,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
+@RequestMapping(value="/api/checkouts/shippings")
 public class ShippingController {
     private final Logger logger = LoggerFactory.getLogger(ShippingController.class);
     private final ShippingService shippingService;
@@ -20,7 +22,7 @@ public class ShippingController {
         this.shippingService = shippingService;
     }
 
-    @PostMapping(value = "/checkouts/shippings/cost")
+    @PostMapping(value = "/cost")
     public ResponseEntity<Money> calculateShippingCost(@RequestBody List<ShippingItem> shippingList) {
         logger.info("calculateShippingCost");
         int itemCount = shippingList.stream()

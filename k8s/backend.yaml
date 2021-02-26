@@ -21,15 +21,17 @@ spec:
               value: http://eshop-cartservice:8091
             - name: URL_PRODUCTSERVICE
               value: http://eshop-productservice:8092
+            - name: SPRING_DATASOURCE_URL
+              value: "jdbc:postgresql://postgres:5432/eshop_db"
             - name: SPRING_RABBITMQ_HOST
-              value: rabbitmq              
+              value: rabbitmq
           resources:
             requests:
               cpu: 500m
               memory: 384Mi
             limits:
               cpu: 1000m
-              memory: 1024Mi              
+              memory: 1024Mi
 ---
 apiVersion: v1
 kind: Service

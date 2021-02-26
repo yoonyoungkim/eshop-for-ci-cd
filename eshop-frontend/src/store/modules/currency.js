@@ -26,7 +26,7 @@ export default {
       }, 
       async fetchCurrencies(context) {
         console.log("fetchCurrencies")
-        const currencies = (await axios.get(process.env.VUE_APP_BASE_URL + "/currencies")).data
+        const currencies = (await axios.get(process.env.VUE_APP_BASE_URL + "/api/currencies")).data
         context.commit("setCurrencies", currencies)
       }
     },

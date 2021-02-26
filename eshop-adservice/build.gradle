@@ -2,7 +2,7 @@ plugins {
     id 'org.springframework.boot' version '2.2.6.RELEASE'
     id 'io.spring.dependency-management' version '1.0.9.RELEASE'
     id 'java'
-    id 'com.google.cloud.tools.jib' version '2.1.0'
+    id 'com.google.cloud.tools.jib' version '2.7.0'
 }
 
 group = 'com.samsungsds'
@@ -26,7 +26,11 @@ dependencies {
     implementation 'org.postgresql:postgresql'
     developmentOnly 'org.springframework.boot:spring-boot-devtools'    
     implementation 'com.google.guava:guava:28.2-jre'
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
+    implementation  'io.github.resilience4j:resilience4j-spring-boot2:1.5.0'
 
+    //for resilience test
+    implementation 'de.codecentric:chaos-monkey-spring-boot:2.2.0'
 
     testImplementation('org.springframework.boot:spring-boot-starter-test') {
         exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'

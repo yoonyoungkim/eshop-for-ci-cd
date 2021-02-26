@@ -25,24 +25,26 @@ public class CartService {
 
     public void emptyCart() {
         logger.info("emptyCart()");
-        String emptyCartUrl = cartServiceUrl + "/empty";
+        String emptyCartUrl = cartServiceUrl + "/api/carts/empty";
         restTemplate.postForEntity(emptyCartUrl, null,  Void.class);
     }
 
     public void addToCart(final CartItem cartItem) {
         logger.info("addToCart() : {}", cartItem);
-        restTemplate.postForEntity(cartServiceUrl, cartItem,  CartItem.class);
+        String addToCartUrl = cartServiceUrl + "/api/carts";
+        restTemplate.postForEntity(addToCartUrl, cartItem,  CartItem.class);
     }
 
     public List<CartItem> getCartItems() {
         logger.info("getCartItems()");
-        ResponseEntity<CartItem[]> cartItemsResponse = restTemplate.getForEntity(cartServiceUrl, CartItem[].class);
+        String getCartItemsUrl = cartServiceUrl + "/api/carts";
+        ResponseEntity<CartItem[]> cartItemsResponse = restTemplate.getForEntity(getCartItemsUrl, CartItem[].class);
         return Lists.newArrayList(cartItemsResponse.getBody());
     }
 
     public Long getCartItemsCount() {
         logger.info("getCartItemsCount()");
-        String cartItemsCountUrl = cartServiceUrl + "/count";
+        String cartItemsCountUrl = cartServiceUrl + "/api/carts/count";
         ResponseEntity<Long> cartItemsCountResponse = restTemplate.getForEntity(cartItemsCountUrl, Long.class);
         return cartItemsCountResponse.getBody();
     }

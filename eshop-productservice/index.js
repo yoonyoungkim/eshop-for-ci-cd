@@ -22,7 +22,7 @@ mongoose.connect(process.env.MONGO_URI, {
   useNewUrlParser: true,
 });
 
-app.get("/", async (req, res) => {
+app.get("/api/products", async (req, res) => {
   if (req.query.ids) {
     const ids = req.query.ids.split(",");
     console.log("Filtered Product List : ", ids);
@@ -42,7 +42,7 @@ app.get("/", async (req, res) => {
   }
 });
 
-app.get("/:id", async (req, res) => {
+app.get("/api/products/:id", async (req, res) => {
   const requestedId = req.params.id;
   console.log("Requested Product : " + requestedId);
   const result = await Product.findOne({ id: requestedId });

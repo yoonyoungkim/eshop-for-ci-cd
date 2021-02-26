@@ -9,12 +9,12 @@ const port = process.env.PORT || 8094;
 
 app.use(bodyParser.json());
 
-app.get('/', (req, res) => {
+app.get('/api/currencies', (req, res) => {
   console.log("All Currencies")
   res.send(data)
 })
 
-app.post('/convert', (req, res) => {
+app.post('/api/currencies/convert', (req, res) => {
 	const from = req.body.from;
 	const to_code = req.body.to_code;
 

@@ -49,28 +49,28 @@ export default {
     actions: {
       async emptyCart(context) {
         console.log("emptyCart")
-        await axios.post(process.env.VUE_APP_BASE_URL + "/carts" + "/empty")
+        await axios.post(process.env.VUE_APP_BASE_URL + "/api/carts" + "/empty")
         context.commit("emptyCart")
       },
       async addToCart(context, cartItem) {
         console.log("addToCart : " + JSON.stringify(cartItem))
-        await axios.post(process.env.VUE_APP_BASE_URL + "/carts", cartItem)
-        const cartProduct = (await axios.get(process.env.VUE_APP_BASE_URL + "/products/" + cartItem.id)).data
+        await axios.post(process.env.VUE_APP_BASE_URL + "/api/carts", cartItem)
+        const cartProduct = (await axios.get(process.env.VUE_APP_BASE_URL + "/api/products/" + cartItem.id)).data
         cartItem.product = cartProduct
         context.commit("addToCart", cartItem)
       },
       async fetchCartItems(context) {
         console.log("fetchCartItems")
-        const cartItems = (await axios.get(process.env.VUE_APP_BASE_URL + "/carts")).data
+        const cartItems = (await axios.get(process.env.VUE_APP_BASE_URL + "/api/carts")).data
         const cartItemIds = cartItems.map((item) => item.id).join(',')
-        const cartProducts = (await axios.get(process.env.VUE_APP_BASE_URL + "/products?ids=" + cartItemIds)).data.products
+        const cartProducts = (await axios.get(process.env.VUE_APP_BASE_URL + "/api/products?ids=" + cartItemIds)).data.products
         cartItems.map(item => item.product = cartProducts.find(product => product.id === item.id))
         await context.commit("setCartItems", cartItems)
       },
       async fetchShippingCost(context, cartItems) {
         console.log("fetchShippingCost")
         console.log(cartItems)
-        const shippingCost = (await axios.post(process.env.VUE_APP_BASE_URL + "/checkouts/shippings/cost", 
+        const shippingCost = (await axios.post(process.env.VUE_APP_BASE_URL + "/api/checkouts/shippings/cost", 
         cartItems.map(
           item => {
             return { productId: item.id, quantity: item.quantity }
@@ -78,7 +78,7 @@ export default {
         context.commit("setShippingCost", shippingCost)
       },
       async checkout(context) {
-        const orderResult = (await axios.post(process.env.VUE_APP_BASE_URL +"/checkouts/orders", context.state.orderInfo)).data
+        const orderResult = (await axios.post(process.env.VUE_APP_BASE_URL +"/api/checkouts/orders", context.state.orderInfo)).data
         context.commit("emptyCart")
         context.commit("order/setOrder", orderResult, {root: true});
       }
