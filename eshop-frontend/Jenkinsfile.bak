@@ -1,7 +1,8 @@
 pipeline {
   environment {
     PROJECT_ID = 'architect-certification-289902'
-    MEMBER_ID = '88'
+    MEMBER_ID = ''
+    VUE_APP_BASE_URL = "/api"
   }
   agent {
     kubernetes {
@@ -30,8 +31,8 @@ spec:
     stage('build docker image') {
       steps {
         container('dind') {
-          dir('eshop-productservice') {
-            sh 'docker image build -t gcr.io/$PROJECT_ID/$MEMBER_ID/eshop-productservice:$BUILD_ID .'
+          dir('eshop-frontend') {
+            sh 'docker image build -t gcr.io/$PROJECT_ID/$MEMBER_ID/eshop-frontend:$BUILD_ID --build-arg VUE_APP_BASE_URL=$VUE_APP_BASE_URL .'
           }
         }
       }
@@ -40,10 +41,10 @@ spec:
     stage('push docker image') {
       steps {
         container('dind') {
-          dir('eshop-productservice') {
+          dir('eshop-frontend') {
             withCredentials([file(credentialsId: 'gcr-credential', variable: 'GCR_CREDENTIAL_JSON')]) {
               sh 'docker login gcr.io -u _json_key -p "$( cat $GCR_CREDENTIAL_JSON )"'
-              sh 'docker image push gcr.io/$PROJECT_ID/$MEMBER_ID/eshop-productservice:$BUILD_ID'
+              sh 'docker image push gcr.io/$PROJECT_ID/$MEMBER_ID/eshop-frontend:$BUILD_ID'
             }
           }
         }
