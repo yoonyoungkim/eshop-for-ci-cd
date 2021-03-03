@@ -1,13 +1,17 @@
-require('@google-cloud/trace-agent').start();
 const express = require("express");
-const app = express();
 const dotenv = require("dotenv");
 const mongoose = require("mongoose");
 const Product = require("./product-model")
+import middleware from 'express-opentracing';
+const app = express();
 
 dotenv.config();
 
+const tracer = require('./tracer')('currencyservice');
+app.use(middleware({tracer: tracer}));
+
 const port = process.env.PORT;
+
 
 let db = mongoose.connection;
 db.on("error", console.error);
