@@ -25,6 +25,7 @@ dependencies {
     developmentOnly 'org.springframework.boot:spring-boot-devtools'    
     implementation 'com.google.guava:guava:28.2-jre'
     implementation 'org.springframework.boot:spring-boot-starter-amqp'
+    implementation 'org.springframework.cloud:spring-cloud-gcp-starter-trace:1.2.6.RELEASE'
 
 
     testImplementation('org.springframework.boot:spring-boot-starter-test') {
