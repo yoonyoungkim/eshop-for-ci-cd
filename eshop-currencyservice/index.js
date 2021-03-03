@@ -1,13 +1,18 @@
-const express = require('express');
-const bodyParser = require('body-parser');
+import express from 'express';
+import { json } from 'body-parser';
+import data from './data/initial-data.json';
+import { config } from 'dotenv';
+import middleware from 'express-opentracing';
+
 const app = express();
-const data = require('./data/initial-data.json');
-const dotenv = require('dotenv');
-dotenv.config();
+config();
+
+const tracer = require('./tracer')('currencyservice');
 
 const port = process.env.PORT || 8094;
 
-app.use(bodyParser.json());
+app.use(json());
+app.use(middleware({tracer: tracer}));
 
 app.get('/api/currencies', (req, res) => {
   console.log("All Currencies")

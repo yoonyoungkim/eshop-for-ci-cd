@@ -1,7 +1,7 @@
 pipeline {
   environment {
     PROJECT_ID = 'architect-certification-289902'
-    MEMBER_ID = '88'
+    MEMBER_ID = ''
   }
   agent {
     kubernetes {
@@ -25,9 +25,9 @@ spec:
     stage('build and push docker image') {
       steps {
         container('gradle') {
-          dir('eshop-adservice') {
+          dir('eshop-cartservice') {
             withCredentials([file(credentialsId: 'gcr-credential', variable: 'GCR_CREDENTIAL_JSON')]) {
-              sh 'gradle jib --no-daemon --image gcr.io/$PROJECT_ID/$MEMBER_ID/eshop-adservice:$BUILD_ID -Djib.to.auth.username=_json_key -Djib.to.auth.password="$( cat $GCR_CREDENTIAL_JSON )"'
+              sh 'gradle jib --no-daemon --image gcr.io/$PROJECT_ID/$MEMBER_ID/eshop-cartservice:$BUILD_ID -Djib.to.auth.username=_json_key -Djib.to.auth.password="$( cat $GCR_CREDENTIAL_JSON )"'
             }
           }
         }
